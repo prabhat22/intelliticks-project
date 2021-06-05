@@ -1,7 +1,11 @@
 <div class="d-flex flex-column bd-highlight m-3">
-  <div class="row">
+  <h3>PropertyList</h3>
+  <div class="row" *ngIf="propertyList.length > 0;else elseBlock">
     <div class="col-sm-6 mb-3" *ngFor="let property of propertyList">
-      <app-property-card [data]=data></app-property-card>
+      <app-property-card [data]=property></app-property-card>
     </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  No properties to show
+</ng-template>

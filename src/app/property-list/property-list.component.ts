@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Property } from '../../models/property';
 import { DataServiceService } from '../data-service.service';
@@ -8,27 +8,21 @@ import { DataServiceService } from '../data-service.service';
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.css']
 })
-export class PropertyListComponent implements OnInit, OnDestroy {
-  public propertyList: Property[] = [];
+export class PropertyListComponent implements OnInit, OnChanges, OnDestroy {
+  public propertyList: any[] = [];
   private subscription: Subscription;
-  public data: Property = {
-    name: 'Property 1 ',
-    size: '220 sqft',
-    description: 'Nice one'
-  };
   constructor(private ds: DataServiceService) {}
+  ngOnChanges() {}
 
   ngOnInit() {
-    this.subscription = this.ds
-      .getProperty()
-      .subscribe((properties: Property[]) => {
-        if (properties.length == 0) {
-          for (let i = 0; i <= 6; i++) this.propertyList.push(this.data);
-          console.log('properties::' + this.propertyList);
-        } else {
-          this.propertyList = properties;
-        }
-      });
+    console.log('list oninti');
+    this.subscription = this.ds.getProperty().subscribe((properties: any[]) => {
+      console.log('properties');
+      for (let i = 0; i < properties.length; i++) {
+        console.log(JSON.parse(properties[i]));
+        this.propertyList.push(JSON.parse(properties[i]));
+      }
+    });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

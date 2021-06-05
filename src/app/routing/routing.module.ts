@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppComponent } from '../app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AddPropertyComponent } from '../add-property/add-property.component';
 import { PropertyListComponent } from '../property-list/property-list.component';
