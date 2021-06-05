@@ -30,7 +30,8 @@ export class DataServiceService {
   getPropertyBasedOnId(id) {
     for (let i = 0; i < this.propertyList.length; i++) {
       console.log('prope' + this.propertyList[i]);
-      if (this.propertyList[i].id == id) return this.propertyList[i];
+      if (this.propertyList[i].id == id)
+        return JSON.stringify(this.propertyList[i]);
     }
   }
 }

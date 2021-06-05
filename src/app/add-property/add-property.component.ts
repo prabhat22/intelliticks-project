@@ -19,15 +19,15 @@ export class AddPropertyComponent implements OnInit {
       {
          const id = +params['id'];
         console.log('Url Id: ',id);
-        let data=this.ds.getPropertyBasedOnId(id);
-        console.log(data)
-        this.addPropertyForm.patchValue(
-          {
-            name:data.name,
-            description:data.description,
-            size:data.size
-          }
-        )
+        var data=this.ds.getPropertyBasedOnId(id);
+        console.log(data);
+        // this.addPropertyForm.patchValue(
+        //   {
+        //     name:data.name,
+        //     description:data.description,
+        //     size:data.size
+        //   }
+        // )
       }
     })
 
