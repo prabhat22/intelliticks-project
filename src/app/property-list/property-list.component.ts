@@ -28,9 +28,14 @@ export class PropertyListComponent implements OnInit, OnChanges, OnDestroy {
       .getProperty()
       .subscribe((properties: Property[]) => {
         console.log('properties', properties);
-        for (let i = 0; i < properties.length; i++) {
-          console.log(properties[i]);
-          this.propertyList.push(properties[i]);
+        if (properties.length > 0) {
+          this.propertyList = [];
+          for (let i = 0; i < properties.length; i++) {
+            console.log(properties[i]);
+            this.propertyList.push(properties[i]);
+          }
+        } else {
+          this.propertyList = [];
         }
       });
   }
