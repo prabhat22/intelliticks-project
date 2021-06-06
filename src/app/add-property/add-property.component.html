@@ -11,5 +11,5 @@
     <label for="size" class="form-label">Size</label>
     <input type="text" formControlName="size" class="form-control" id="name" placeholder="placeholder : 220 sqft">
   </div>
-  <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="addPropertyForm.invalid" [style]="cursor:not-allowed" >{{id==null?'Add':'Update'}}</button>
+  <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="addPropertyForm.invalid" >{{id==null?'Add':'Update'}}</button>
 </form>
