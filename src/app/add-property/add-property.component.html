@@ -2,14 +2,35 @@
   <div class="mb-3">
     <label for="name" class="form-label">Name</label>
     <input type="text" formControlName="name" class="form-control" id="name" placeholder="placeholder : Fort">
+    <div
+      *ngIf="addPropertyForm.get('name').invalid && (addPropertyForm.get('name').dirty || addPropertyForm.get('name').touched)"
+      class="alert alert-danger">
+      <div *ngIf="addPropertyForm.get('name').errors.required">
+        Name is required.
+      </div>
+    </div>
   </div>
   <div class="mb-3">
     <label for="desc" class="form-label">Description</label>
     <textarea formControlName="description" class="form-control" id="desc" rows="3"></textarea>
+    <div
+      *ngIf="addPropertyForm.get('description').invalid && (addPropertyForm.get('description').dirty || addPropertyForm.get('description').touched)"
+      class="alert alert-danger">
+      <div *ngIf="addPropertyForm.get('description').errors.required">
+        Description is required.
+      </div>
+    </div>
   </div>
   <div class="mb-3">
     <label for="size" class="form-label">Size</label>
     <input type="text" formControlName="size" class="form-control" id="name" placeholder="placeholder : 220 sqft">
+    <div
+      *ngIf="addPropertyForm.get('size').invalid && (addPropertyForm.get('size').dirty || addPropertyForm.get('size').touched)"
+      class="alert alert-danger">
+      <div *ngIf="addPropertyForm.get('name').errors.required">
+        Size is required.
+      </div>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="addPropertyForm.invalid" >{{id==null?'Add':'Update'}}</button>
+  <button type="submit"  (click)="onSubmit()" [disabled]="addPropertyForm.invalid" [ngClass]="{'invalid btn ':addPropertyForm.invalid,'valid btn btn-primary':addPropertyForm.valid}" >{{id==null?'Add':'Update'}}</button>
 </form>
