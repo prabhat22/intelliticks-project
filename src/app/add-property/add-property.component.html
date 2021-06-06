@@ -27,7 +27,7 @@
     <div
       *ngIf="addPropertyForm.get('size').invalid && (addPropertyForm.get('size').dirty || addPropertyForm.get('size').touched)"
       class="alert alert-danger">
-      <div *ngIf="addPropertyForm.get('name').errors.required">
+      <div *ngIf="addPropertyForm.get('size').errors.required">
         Size is required.
       </div>
     </div>
