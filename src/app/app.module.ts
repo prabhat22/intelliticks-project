@@ -12,6 +12,7 @@ import { DataServiceService } from './data-service.service';
 import { NgxAirtableModule } from 'ngx-airtable';
 import { HttpServiceService } from './http-service.service';
 import { HttpClientModule } from '@angular/common/http';
+
 declare module '@angular/core' {
   interface ModuleWithProviders<T = any> {
     ngModule: Type<T>;
