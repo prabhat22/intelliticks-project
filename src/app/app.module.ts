@@ -9,9 +9,25 @@ import { AddPropertyComponent } from './add-property/add-property.component';
 import { AppRoutingModule } from './routing/routing.module';
 import { PropertyListComponent } from './property-list/property-list.component';
 import { DataServiceService } from './data-service.service';
+import { NgxAirtableModule } from 'ngx-airtable';
+import { HttpServiceService } from './http-service.service';
+import { HttpClientModule } from '@angular/common/http';
+declare module '@angular/core' {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>;
+    providers?: Provider[];
+  }
+}
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    NgxAirtableModule.forRoot({ apiKey: 'key1NrtiI7KpYHcSd' }),
+    HttpClientModule
+  ],
   declarations: [
     AppComponent,
     HelloComponent,
@@ -20,6 +36,6 @@ import { DataServiceService } from './data-service.service';
     PropertyListComponent
   ],
   bootstrap: [AppComponent],
-  providers: [DataServiceService]
+  providers: [DataServiceService, HttpServiceService]
 })
 export class AppModule {}
