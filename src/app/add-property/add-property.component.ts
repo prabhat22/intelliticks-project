@@ -11,23 +11,25 @@ import { DataServiceService } from '../data-service.service';
 })
 export class AddPropertyComponent implements OnInit {
   addPropertyForm: FormGroup;
+  id:Number=null;
+  propertyToUpdate:Property;
   constructor(private ds: DataServiceService, private router: Router,private route:ActivatedRoute) {
     this.initializePropertyForm();
     this.route.params.subscribe((params)=>
     {
       if(params?.id)
       {
-         const id = +params['id'];
-        console.log('Url Id: ',id);
-        var data=this.ds.getPropertyBasedOnId(id);
-        console.log(data);
-        // this.addPropertyForm.patchValue(
-        //   {
-        //     name:data.name,
-        //     description:data.description,
-        //     size:data.size
-        //   }
-        // )
+          this.id = +params['id'];
+        console.log('Url Id: ',this.id);
+         this.propertyToUpdate=this.ds.getPropertyBasedOnId(this.id);
+        console.log(this.propertyToUpdate);
+        this.addPropertyForm.patchValue(
+          {
+            name:  this.propertyToUpdate.name,
+            description:  this.propertyToUpdate.description,
+            size:  this.propertyToUpdate.size
+          }
+        )
       }
     })
 
@@ -44,19 +46,36 @@ export class AddPropertyComponent implements OnInit {
   }
   onSubmit() {
     if (this.addPropertyForm.invalid) return;
+
     console.log(
       this.addPropertyForm.controls.name.value +
         this.addPropertyForm.controls.description.value +
         this.addPropertyForm.controls.size.value
     );
-    let obj: Property = {
-      id:new Date().getMilliseconds(),
+    if(this.id!=null)
+    {
+     let obj: Property = {
+      id:  this.propertyToUpdate.id,
       name: this.addPropertyForm.controls.name.value,
       description: this.addPropertyForm.controls.description.value,
       size: this.addPropertyForm.controls.size.value
     };
-    console.log('obj' + JSON.stringify(obj));
-    this.ds.addProperty(JSON.stringify(obj));
+    this.ds.updateProperty(obj);
+    }
+    else
+    {
+      let obj: Property = {
+      id:  new Date().getMilliseconds(),
+      name: this.addPropertyForm.controls.name.value,
+      description: this.addPropertyForm.controls.description.value,
+      size: this.addPropertyForm.controls.size.value
+    };
+     console.log('obj' + obj);
+   this.ds.addProperty(obj);
+    }
+
+  
+   
     this.router.navigate(['']);
   }
 }
