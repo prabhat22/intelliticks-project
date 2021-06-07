@@ -16,7 +16,7 @@ export class DataServiceService {
   }
 
   addProperty(property: Property) {
-    console.log('service prop:' + property);
+    // console.log('service prop:' + property);
 
     this.propertyList.push(property);
     localStorage.setItem('properties', JSON.stringify(this.propertyList));
