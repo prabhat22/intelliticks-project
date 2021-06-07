@@ -8,6 +8,7 @@ import {
 import { Subscription } from 'rxjs';
 import { Property } from '../../models/property';
 import { DataServiceService } from '../data-service.service';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-property-list',
@@ -17,7 +18,7 @@ import { DataServiceService } from '../data-service.service';
 export class PropertyListComponent implements OnInit, OnChanges, OnDestroy {
   public propertyList: Property[] = [];
   private subscription: Subscription;
-  constructor(private ds: DataServiceService) {}
+  constructor(private ds: DataServiceService, private hs: HttpServiceService) {}
   ngOnChanges() {}
 
   ngOnInit() {
@@ -28,7 +29,6 @@ export class PropertyListComponent implements OnInit, OnChanges, OnDestroy {
         if (properties.length > 0) {
           this.propertyList = [];
           for (let i = 0; i < properties.length; i++) {
-            console.log(properties[i]);
             this.propertyList.push(properties[i]);
           }
         } else {

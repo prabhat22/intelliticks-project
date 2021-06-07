@@ -13,7 +13,7 @@ export class PropertyCardComponent implements OnInit {
 
   ngOnInit() {}
 
-  onDelete(id: Number) {
+  onDelete(id: string) {
     this.ds.deleteProperty(id);
   }
 }

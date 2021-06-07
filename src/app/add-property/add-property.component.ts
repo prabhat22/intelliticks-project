@@ -11,23 +11,23 @@ import { DataServiceService } from '../data-service.service';
 })
 export class AddPropertyComponent implements OnInit {
   addPropertyForm: FormGroup;
-  id:Number=null;
-  propertyToUpdate:Property;
+  id:String=null;
+  propertyToUpdate:any;
   constructor(private ds: DataServiceService, private router: Router,private route:ActivatedRoute) {
     this.initializePropertyForm();
     this.route.params.subscribe((params)=>
     {
       if(params?.id)
       {
-          this.id = +params['id'];
+          this.id = params['id'];
         console.log('Url Id: ',this.id);
          this.propertyToUpdate=this.ds.getPropertyBasedOnId(this.id);
         console.log(this.propertyToUpdate);
         this.addPropertyForm.patchValue(
           {
-            name:  this.propertyToUpdate.name,
-            description:  this.propertyToUpdate.description,
-            size:  this.propertyToUpdate.size
+            name:  this.propertyToUpdate.fields.name,
+            description:  this.propertyToUpdate.fields.description,
+            size:  this.propertyToUpdate.fields.size
           }
         )
       }
@@ -51,12 +51,15 @@ export class AddPropertyComponent implements OnInit {
     if(this.id!=null)
     {
      let obj: Property = {
-      id:  this.propertyToUpdate.id,
+      id:  this.propertyToUpdate.fields.id,
       name: this.addPropertyForm.controls.name.value,
       description: this.addPropertyForm.controls.description.value,
       size: this.addPropertyForm.controls.size.value
     };
-    this.ds.updateProperty(obj);
+    this.ds.updateProperty(this.id,obj).subscribe((data)=>
+    {
+      this.router.navigate(['']);
+    });
     }
     else
     {
@@ -66,8 +69,12 @@ export class AddPropertyComponent implements OnInit {
       description: this.addPropertyForm.controls.description.value,
       size: this.addPropertyForm.controls.size.value
     };
-   this.ds.addProperty(obj);
+   this.ds.addProperty(obj).subscribe((data)=>
+   {
+     this.router.navigate(['']);
+   });
+  
     }
-    this.router.navigate(['']);
+  
   }
 }

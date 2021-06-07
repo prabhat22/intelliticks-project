@@ -1,45 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Property } from '../models/property';
+import { HttpServiceService } from './http-service.service';
 
 @Injectable()
 export class DataServiceService {
   public propertyListEmitter = new BehaviorSubject<Property[]>([]);
-  public propertyList: Property[] = [];
-  constructor() {
-    this.addProperty({
-      id: new Date().getMilliseconds(),
-      name: 'Property1',
-      description: 'good',
-      size: '110'
-    });
+  public propertyList: any[] = [];
+  constructor(private hs: HttpServiceService) {
+    // this.addProperty({
+    //   id: new Date().getMilliseconds(),
+    //   name: 'Property1',
+    //   description: 'good',
+    //   size: '110'
+    // });
   }
 
   addProperty(property: Property) {
-    // console.log('service prop:' + property);
-
-    this.propertyList.push(property);
-    localStorage.setItem('properties', JSON.stringify(this.propertyList));
-    this.propertyListEmitter.next(this.propertyList);
+    return this.hs.addProperty(property);
   }
-  updateProperty(property: Property) {
-    let index = this.getPropertyIndex(property.id);
-    this.propertyList[index].name = property.name;
-    this.propertyList[index].description = property.description;
-    this.propertyList[index].size = property.size;
+  updateProperty(id: String, property: Property) {
+    return this.hs.updateProperty(id, property);
   }
-  deleteProperty(id: Number) {
-    let index = this.getPropertyIndex(id);
-    console.log(index);
-    this.propertyList.splice(index, 1);
-    console.log(JSON.stringify(this.propertyList));
-    this.propertyListEmitter.next(this.propertyList);
+  deleteProperty(id: string) {
+    this.hs.deleteProperty(id).subscribe(data => {
+      if (data.deleted) {
+        let index = this.getPropertyIndex(id);
+        console.log(index);
+        this.propertyList.splice(index, 1);
+        console.log(JSON.stringify(this.propertyList));
+        this.propertyListEmitter.next(this.propertyList);
+      }
+    });
   }
   getProperty() {
+    this.hs.getDataFromApi().subscribe((properties: any) => {
+      this.propertyList = [];
+      for (let i = 0; i < properties.records.length; i++) {
+        this.propertyList.push(properties.records[i]);
+      }
+      this.propertyListEmitter.next(this.propertyList);
+    });
+
     return this.propertyListEmitter.asObservable();
   }
   getPropertyBasedOnId(id) {
-    return this.propertyList[this.getPropertyIndex(id)];
+    let index = this.getPropertyIndex(id);
+    return this.propertyList[index];
   }
   getPropertyIndex(id) {
     for (let i = 0; i < this.propertyList.length; i++) {
