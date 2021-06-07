@@ -9,12 +9,9 @@ import { HttpServiceService } from './http-service.service';
 })
 export class AppComponent {
   constructor(private route: Router, private hs: HttpServiceService) {
-    console.log('const call');
-    this.hs.getDataFromApi();
+    //  this.hs.getDataFromApi();// this service is getting implemented right now
   }
-  ngOnInit() {
-    console.log('oninit call');
-  }
+  ngOnInit() {}
   goTo() {
     this.route.navigate(['add-property']);
   }

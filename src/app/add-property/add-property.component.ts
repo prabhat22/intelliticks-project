@@ -47,11 +47,7 @@ export class AddPropertyComponent implements OnInit {
   onSubmit() {
     if (this.addPropertyForm.invalid) return;
 
-    console.log(
-      this.addPropertyForm.controls.name.value +
-        this.addPropertyForm.controls.description.value +
-        this.addPropertyForm.controls.size.value
-    );
+  
     if(this.id!=null)
     {
      let obj: Property = {
@@ -70,12 +66,8 @@ export class AddPropertyComponent implements OnInit {
       description: this.addPropertyForm.controls.description.value,
       size: this.addPropertyForm.controls.size.value
     };
-     console.log('obj' + obj);
    this.ds.addProperty(obj);
     }
-
-  
-   
     this.router.navigate(['']);
   }
 }

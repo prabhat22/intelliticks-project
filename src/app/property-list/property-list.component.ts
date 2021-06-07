@@ -18,12 +18,9 @@ export class PropertyListComponent implements OnInit, OnChanges, OnDestroy {
   public propertyList: Property[] = [];
   private subscription: Subscription;
   constructor(private ds: DataServiceService) {}
-  ngOnChanges() {
-    console.log('onchnage');
-  }
+  ngOnChanges() {}
 
   ngOnInit() {
-    console.log('list oninit');
     this.subscription = this.ds
       .getProperty()
       .subscribe((properties: Property[]) => {

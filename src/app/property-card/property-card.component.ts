@@ -9,14 +9,11 @@ import { DataServiceService } from '../data-service.service';
 })
 export class PropertyCardComponent implements OnInit {
   @Input() data: Property;
-  constructor(private ds:DataServiceService) {
-    console.log('data', this.data);
-  }
+  constructor(private ds: DataServiceService) {}
 
   ngOnInit() {}
 
-  onDelete(id:Number)
-  {
+  onDelete(id: Number) {
     this.ds.deleteProperty(id);
   }
 }
