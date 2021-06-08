@@ -8,7 +8,7 @@ import { DataServiceService } from '../data-service.service';
   styleUrls: ['./property-card.component.css']
 })
 export class PropertyCardComponent implements OnInit {
-  @Input() data: Property;
+  @Input() data: any;
   constructor(private ds: DataServiceService) {}
 
   ngOnInit() {}
